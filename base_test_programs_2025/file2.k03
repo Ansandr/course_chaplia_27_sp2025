@@ -1,0 +1,36 @@
+program AA0;
+start var int32 AB1, AC2, AD3, AE4;
+read AB1;
+read AC2;
+read AD3;
+
+if AB1 gt AC2 and AB1 gt AD3 {
+    AB1 :> AE4;
+} else {
+    if AC2 gt AB1 and AC2 gt AD3 {
+        AC2 :> AE4;
+    } else {
+        AD3 :> AE4;
+    };
+}
+write AE4;
+
+if AB1 == AC2 and AB1 == AD3 and AC2 == AD3 {
+    write 1;
+} else {
+    write 0;
+}
+
+if AB1 lt 0 or AC2 lt 0 or AD3 lt 0 {
+    write (0 - 1);
+} else {
+    write 0;
+}
+
+if not (AB1 lt (AC2 add AD3)) {
+    write 10;
+} else {
+    write 0;
+}
+
+end

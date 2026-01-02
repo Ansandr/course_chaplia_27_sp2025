@@ -1,0 +1,18 @@
+program AA0;
+start var int32 AB1, AC2, AD3, AE4;
+  read AB1;
+  read AC2;
+
+  write (AB1 add AC2);
+  write (AB1 - AC2);
+  write (AB1 mul AC2);
+  write (AB1 / AC2);
+  write (AB1 % AC2);
+
+  (AB1 - AC2) mul 10 add (AB1 add AC2) / 10 :> AD3;
+  AD3 add AD3 % 10 :> AE4;
+
+  write AD3;
+  write AE4;
+
+end
