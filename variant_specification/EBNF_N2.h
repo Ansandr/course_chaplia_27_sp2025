@@ -1,19 +1,12 @@
-/*
+﻿/*
 Перевірка РБНФ №2 за допомогою коду
 (помістити у файл "EBNF_N2.h")
-
-специфікація мови:
-- program<name>; start var...; end
-- Оператори: read, write, if, else, while, break, continue
-- Присвоєння: :> (зліва направо)
-- Операції: add, -, mul, /, %, ==, !=, lt, gt, not, and, or
-- Тип даних: int32
-- Ідентифікатори: [A-Z][A-Z][0-9]
-- Коментар: /*...
 */
 
 
-#define NONTERMINALS program_name, \
+#define NONTERMINALS labeled_point, \
+goto_label, \
+program_name, \
 value_type, \
 array_specify, \
 declaration_element, \
@@ -41,15 +34,7 @@ body_for_false, \
 cond_block, \
 false_cond_block_without_else__iteration, \
 body_for_false__optional, \
-continue_while, \
-break_while, \
-statement_in_while_and_if_body, \
-statement, \
-block_statements_in_while_and_if_body, \
-statement_in_while_and_if_body__iteration, \
-while_cycle_head_expression, \
-while_cycle, \
-statements__or__block_statements, \
+statement,\
 block_statements, \
 input_rule, \
 argument_for_input, \
@@ -71,6 +56,8 @@ letter_in_lower_case, \
 sign_plus, \
 sign_minus
 #define TOKENS \
+tokenCOLON, \
+tokenGOTO, \
 tokenINTEGER16, \
 tokenCOMMA, \
 tokenNOT, \
@@ -90,9 +77,6 @@ tokenGROUPEXPRESSIONEND, \
 tokenLRASSIGN, \
 tokenELSE, \
 tokenIF, \
-tokenWHILE, \
-tokenCONTINUE, \
-tokenBREAK, \
 tokenEXIT, \
 tokenGET, \
 tokenPUT, \
@@ -169,8 +153,8 @@ w, \
 x, \
 y, \
 z
-#define COMMENT_BEGIN_STR "#*"
-#define COMMENT_END_STR   "*#"
+#define COMMENT_BEGIN_STR "%*"
+#define COMMENT_END_STR   "*%"
 
 
 
@@ -182,41 +166,42 @@ tokenRIGHTSQUAREBRACKETS = "]" >> BOUNDARIES;
 tokenBEGINBLOCK = "{" >> BOUNDARIES;
 tokenENDBLOCK = "}" >> BOUNDARIES;
 tokenSEMICOLON = ";" >> BOUNDARIES;
-tokenINTEGER16 = "int32" >> STRICT_BOUNDARIES;
+tokenCOLON = ":" >> BOUNDARIES;
+tokenGOTO = "Goto" >> STRICT_BOUNDARIES;
+tokenINTEGER16 = "Int_4" >> STRICT_BOUNDARIES;
 tokenCOMMA = "," >> BOUNDARIES;
 
-tokenNOT = "not" >> STRICT_BOUNDARIES;
+tokenNOT = "Not" >> STRICT_BOUNDARIES;
 
-tokenAND = "and" >> STRICT_BOUNDARIES;
+tokenAND = "And" >> STRICT_BOUNDARIES;
 
-tokenOR = "or" >> STRICT_BOUNDARIES;
-tokenEQUAL = "==" >> BOUNDARIES;
-tokenNOTEQUAL = "!=" >> BOUNDARIES;
-tokenLESS = "lt" >> BOUNDARIES;
-tokenGREATER = "gt" >> BOUNDARIES;
-tokenPLUS = "add" >> BOUNDARIES;
-tokenMINUS = "-" >> BOUNDARIES;
-tokenMUL = "mul" >> BOUNDARIES;
-tokenDIV = "/" >> STRICT_BOUNDARIES;
-tokenMOD = "%" >> STRICT_BOUNDARIES;
+tokenOR = "||" >> BOUNDARIES;
+tokenEQUAL = "Eg" >> STRICT_BOUNDARIES;
+tokenNOTEQUAL = "Ne" >> STRICT_BOUNDARIES;
+tokenLESS = "Le" >> STRICT_BOUNDARIES;
+tokenGREATER = "Ge" >> STRICT_BOUNDARIES;
+tokenPLUS = "++" >> BOUNDARIES;
+tokenMINUS = "Sub" >> STRICT_BOUNDARIES;
+tokenMUL = "**" >> BOUNDARIES;
+tokenDIV = "Div" >> STRICT_BOUNDARIES;
+tokenMOD = "Mod" >> STRICT_BOUNDARIES;
 tokenLRASSIGN = ":>" >> BOUNDARIES;
 
-tokenELSE = "else" >> STRICT_BOUNDARIES;
-tokenIF = "if" >> STRICT_BOUNDARIES;
+tokenELSE = "Else" >> STRICT_BOUNDARIES;
+tokenIF = "If" >> STRICT_BOUNDARIES;
 
-tokenWHILE = "while" >> STRICT_BOUNDARIES;
-tokenCONTINUE = "continue" >> STRICT_BOUNDARIES;
-tokenBREAK = "break" >> STRICT_BOUNDARIES;
-tokenEXIT = "exit" >> STRICT_BOUNDARIES;
-tokenGET = "read" >> STRICT_BOUNDARIES;
-tokenPUT = "write" >> STRICT_BOUNDARIES;
-tokenNAME = "program" >> STRICT_BOUNDARIES;
-tokenBODY = "start" >> STRICT_BOUNDARIES;
-tokenDATA = "var" >> STRICT_BOUNDARIES;
-tokenBEGIN = "begin" >> STRICT_BOUNDARIES;
-tokenEND = "end" >> STRICT_BOUNDARIES;
+tokenEXIT = "EXIT" >> STRICT_BOUNDARIES;
+tokenGET = "Scan" >> STRICT_BOUNDARIES;
+tokenPUT = "Print" >> STRICT_BOUNDARIES;
+tokenNAME = "Program" >> STRICT_BOUNDARIES;
+tokenBODY = "Start" >> STRICT_BOUNDARIES;
+tokenDATA = "Var" >> STRICT_BOUNDARIES;
+tokenBEGIN = "BEGIN" >> STRICT_BOUNDARIES;
+tokenEND = "End" >> STRICT_BOUNDARIES;
 
 
+labeled_point = ident >> tokenCOLON;
+goto_label = tokenGOTO >> ident;
 program_name = SAME_RULE(ident);
 value_type = SAME_RULE(tokenINTEGER16);
 array_specify = "[" >> unsigned_value >> "]";
@@ -239,24 +224,16 @@ expression_or_cond_block__with_optional_assign = expression >> assign_to_right__
 assign_to_right = tokenLRASSIGN >> ident >> index_action__optional;
 assign_to_right__optional = assign_to_right | "";
 if_expression = SAME_RULE(expression);
-body_for_true = SAME_RULE(block_statements_in_while_and_if_body);
+body_for_true = SAME_RULE(block_statements);
 false_cond_block_without_else = tokenELSE >> tokenIF >> if_expression >> body_for_true;
-body_for_false = tokenELSE >> block_statements_in_while_and_if_body;
+body_for_false = tokenELSE >> block_statements;
 cond_block = tokenIF >> if_expression >> body_for_true >> false_cond_block_without_else__iteration >> body_for_false__optional;
 false_cond_block_without_else__iteration = false_cond_block_without_else >> false_cond_block_without_else__iteration | "";
 body_for_false__optional = body_for_false | "";
-continue_while = SAME_RULE(tokenCONTINUE);
-break_while = SAME_RULE(tokenBREAK);
-statement_in_while_and_if_body = statement | continue_while | break_while;
-block_statements_in_while_and_if_body = tokenBEGINBLOCK >> statement_in_while_and_if_body__iteration >> tokenENDBLOCK;
-statement_in_while_and_if_body__iteration = statement_in_while_and_if_body >> statement_in_while_and_if_body__iteration | "";
-while_cycle_head_expression = SAME_RULE(expression);
-while_cycle = tokenWHILE >> while_cycle_head_expression >> block_statements_in_while_and_if_body;
-statements__or__block_statements = statement__iteration | block_statements;
 input_rule = tokenGET >> argument_for_input;
 argument_for_input = ident >> index_action__optional | tokenGROUPEXPRESSIONBEGIN >> ident >> index_action__optional >> tokenGROUPEXPRESSIONEND;
 output_rule = tokenPUT >> expression;
-statement = expression_or_cond_block__with_optional_assign | while_cycle | input_rule | output_rule | tokenSEMICOLON;
+statement = labeled_point /* labeled_point first*/ | expression_or_cond_block__with_optional_assign | goto_label | input_rule | output_rule | tokenSEMICOLON;
 statement__iteration = statement >> statement__iteration | "";
 block_statements = tokenBEGINBLOCK >> statement__iteration >> tokenENDBLOCK;
 expression__optional = expression | "";
@@ -284,6 +261,8 @@ non_zero_digit = digit_1 | digit_2 | digit_3 | digit_4 | digit_5 | digit_6 | dig
 tokenUNDERSCORE = "_";
 ident =
 !(
+	tokenCOLON |
+	tokenGOTO |
 	tokenINTEGER16 |
 	tokenCOMMA |
 	tokenNOT |
@@ -303,9 +282,6 @@ ident =
 	tokenLRASSIGN |
 	tokenELSE |
 	tokenIF |
-	tokenWHILE |
-	tokenCONTINUE |
-	tokenBREAK |
 	tokenEXIT |
 	tokenGET |
 	tokenPUT |
@@ -320,7 +296,7 @@ ident =
 	tokenRIGHTSQUAREBRACKETS |
 	tokenSEMICOLON
 	) >>
-	tokenUNDERSCORE >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> letter_in_upper_case >> STRICT_BOUNDARIES;
+	tokenUNDERSCORE >> letter_in_upper_case >> letter_in_lower_case >> digit >> STRICT_BOUNDARIES;
 A = "A";
 B = "B";
 C = "C";
@@ -398,3 +374,4 @@ BOUNDARY__CARRIAGE_RETURN, \
 BOUNDARY__LINE_FEED, \
 BOUNDARY__NULL, \
 NO_BOUNDARY
+

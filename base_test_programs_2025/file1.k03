@@ -1,18 +1,18 @@
-program AA0;
-start var int32 AB1, AC2, AD3, AE4;
-  read AB1;
-  read AC2;
+Program _Ab3
+Start Var Int_4 _Aa1 , _Bb2 , _Xx3 , _Yy4
+  Scan ( _Aa1 )
+  Scan ( _Bb2 )
 
-  write (AB1 add AC2);
-  write (AB1 - AC2);
-  write (AB1 mul AC2);
-  write (AB1 / AC2);
-  write (AB1 % AC2);
+  Print ( _Aa1 ++ _Bb2 )
+  Print ( _Aa1 Sub _Bb2 )
+  Print ( _Aa1 ** _Bb2 )
+  Print ( _Aa1 Div _Bb2 )
+  Print ( _Aa1 Mod _Bb2 )
 
-  (AB1 - AC2) mul 10 add (AB1 add AC2) / 10 :> AD3;
-  AD3 add AD3 % 10 :> AE4;
+  ( _Aa1 Sub _Bb2 ) ** 10 ++ ( _Aa1 ++ _Bb2 ) Div 10 :> _Xx3
+  _Xx3 ++ _Xx3 Mod 10 :> _Yy4
 
-  write AD3;
-  write AE4;
+  Print ( _Xx3 )
+  Print ( _Yy4 )
 
-end
+End

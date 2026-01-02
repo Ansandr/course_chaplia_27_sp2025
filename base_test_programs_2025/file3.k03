@@ -1,24 +1,43 @@
-program AF5;
-start var int32 AG6, AH7, AI8, AJ9, AK0;
-  read AG6;
-  read AH7;
+Program _Ab3 
+Start Var Int_4 _Aa1 , _Bb2 , _Ca1 , _Cb2 , _Xv3
+  Scan ( _Aa1 )
+  Scan ( _Bb2 )
 
-  AG6 :> AI8;
-  while AI8 lt (AH7 add 1) {
-    write (AI8 mul AI8);
-    AI8 add 1 :> AI8;
+  _Aa1 :> _Ca1
+
+_Lb1 :
+  If _Ca1 Le _Bb2 ++ 1 {
+    Goto _Le1
   }
+  Print ( _Ca1 ** _Ca1 )
+  _Ca1 ++ 1 :> _Ca1
+  Goto _Lb1
+_Le1 :
 
-  0 :> AK0;
-  1 :> AI8;
-  while AI8 lt (AG6 add 1) {
-    1 :> AJ9;
-    while AJ9 lt (AH7 add 1) {
-      AK0 add 1 :> AK0;
-      AJ9 add 1 :> AJ9;
-    }
-    AI8 add 1 :> AI8;
+  0 :> _Xv3 
+  1 :> _Ca1
+
+_La1 :
+  If Not ( _Ca1 Le _Aa1 ++ 1 ) {
+     Goto _Le2
   }
-  write AK0;
+  
+  1 :> _Cb2
+  
+_Lb2 :
+  If Not ( _Cb2 Le _Bb2 ++ 1 ) {
+     Goto _Le3
+  }
+  
+  _Xv3 ++ 1 :> _Xv3
+  _Cb2 ++ 1 :> _Cb2
+  Goto _Lb2
 
-end
+_Le3 :
+  _Ca1 ++ 1 :> _Ca1
+  Goto _La1
+
+_Le2 :
+  Print ( _Xv3 )
+
+End

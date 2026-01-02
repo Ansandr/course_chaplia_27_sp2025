@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.1.11312.151 d18.0
+VisualStudioVersion = 18.1.11312.151
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "verify_syntax_by_EBNF_nonpacked__2025", "verify_syntax_by_EBNF_nonpacked__2025\verify_syntax_by_EBNF_nonpacked__2025.vcxproj", "{36530900-47FF-4939-940F-B46F179C870B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "verify_syntax_by_EBNF__2025", "verify_syntax_by_EBNF__2025\verify_syntax_by_EBNF__2025.vcxproj", "{8F62F20C-0B32-4F6D-A449-109145DD1086}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dfa_generator__2025", "dfa_generator__2025\dfa_generator__2025.vcxproj", "{93995E25-58E8-468D-B3AE-B5C35B5788BD}"
 EndProject
@@ -27,6 +29,14 @@ Global
 		{36530900-47FF-4939-940F-B46F179C870B}.Release|x64.Build.0 = Release|x64
 		{36530900-47FF-4939-940F-B46F179C870B}.Release|x86.ActiveCfg = Release|Win32
 		{36530900-47FF-4939-940F-B46F179C870B}.Release|x86.Build.0 = Release|Win32
+		{8F62F20C-0B32-4F6D-A449-109145DD1086}.Debug|x64.ActiveCfg = Debug|x64
+		{8F62F20C-0B32-4F6D-A449-109145DD1086}.Debug|x64.Build.0 = Debug|x64
+		{8F62F20C-0B32-4F6D-A449-109145DD1086}.Debug|x86.ActiveCfg = Debug|Win32
+		{8F62F20C-0B32-4F6D-A449-109145DD1086}.Debug|x86.Build.0 = Debug|Win32
+		{8F62F20C-0B32-4F6D-A449-109145DD1086}.Release|x64.ActiveCfg = Release|x64
+		{8F62F20C-0B32-4F6D-A449-109145DD1086}.Release|x64.Build.0 = Release|x64
+		{8F62F20C-0B32-4F6D-A449-109145DD1086}.Release|x86.ActiveCfg = Release|Win32
+		{8F62F20C-0B32-4F6D-A449-109145DD1086}.Release|x86.Build.0 = Release|Win32
 		{93995E25-58E8-468D-B3AE-B5C35B5788BD}.Debug|x64.ActiveCfg = Debug|x64
 		{93995E25-58E8-468D-B3AE-B5C35B5788BD}.Debug|x64.Build.0 = Debug|x64
 		{93995E25-58E8-468D-B3AE-B5C35B5788BD}.Debug|x86.ActiveCfg = Debug|Win32

@@ -1,17 +1,17 @@
 /*
-Перевірка прототипу LL(2)-синтаксичного аналізатора (спеціальна структура) та прототипу лексичного аналізатора (регулярні вирази) за допомогою коду. Лексеми для синтаксичного аналізатора обробляються лексичним аналізатором, тому синтаксичний аналізатор не аналізує їх повторно (як показано в РБНФ).
-(помістити у файл "LexicaByRegExAndSyntaxByLL2protototype.h")
-УВАГА: при копіюванні зважайте, щоб у кожному рядку після символу «\» не містилось жодних інших символів.
+�������� ��������� LL(2)-������������� ���������� (���������� ���������) �� ��������� ���������� ���������� (��������� ������) �� ��������� ����. ������� ��� ������������� ���������� ������������ ��������� �����������, ���� ������������ ��������� �� ������ �� �������� (�� �������� � ����).
+(�������� � ���� "LexicaByRegExAndSyntaxByLL2protototype.h")
+�����: ��� ��������� ��������, ��� � ������� ����� ���� ������� �\� �� �������� ������ ����� �������.
 */
 
 
 
 
-#define COMMENT_BEGIN_STR "/*"
-#define COMMENT_END_STR   "*/"
-#define TOKENS_RE         ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|\\[|\\]|\\(|\\)|\\{|\\}|,|program|start|end|var|read|write|if|else|while|break|continue|int32|[A-Z][A-Z][0-9]|[0-9]+"
-#define KEYWORDS_RE       ";|:>|add|-|mul|/|%|==|!=|lt|gt|not|and|or|\\[|\\]|\\(|\\)|\\{|\\}|,|program|start|end|var|read|write|if|else|while|break|continue|int32"
-#define IDENTIFIERS_RE    "[A-Z][A-Z][0-9]"
+#define COMMENT_BEGIN_STR "%*"
+#define COMMENT_END_STR   "*%"
+#define TOKENS_RE         ";|:>|\\+\\+|Sub|\\*\\*|Div|Mod|Eg|Ne|Le|Ge|Not|And|\\|\\||\\[|\\]|\\(|\\)|\\{|\\}|,|Program|Start|End|Var|Scan|Print|If|Else|Goto|Int_4|_[A-Z][a-z][0-9]|[0-9]+"
+#define KEYWORDS_RE       ";|:>|\\+\\+|Sub|\\*\\*|Div|Mod|Eg|Ne|Le|Ge|Not|And|\\|\\||\\[|\\]|\\(|\\)|\\{|\\}|,|Program|Start|End|Var|Scan|Print|If|Else|Goto|Int_4"
+#define IDENTIFIERS_RE    "_[A-Z][a-z][0-9]"
 #define UNSIGNEDVALUES_RE "0|[1-9][0-9]*"
 #define T_BEGIN_GROUPEXPRESSION_0 "("
 #define T_BEGIN_GROUPEXPRESSION_1 ""
@@ -41,7 +41,15 @@
 #define T_SEMICOLON_1 ""
 #define T_SEMICOLON_2 ""
 #define T_SEMICOLON_3 ""
-#define T_DATA_TYPE_0 "int32"
+#define T_COLON_0 ":"
+#define T_COLON_1 ""
+#define T_COLON_2 ""
+#define T_COLON_3 ""
+#define T_GOTO_0 "Goto"
+#define T_GOTO_1 ""
+#define T_GOTO_2 ""
+#define T_GOTO_3 ""
+#define T_DATA_TYPE_0 "Int_4"
 #define T_DATA_TYPE_1 ""
 #define T_DATA_TYPE_2 ""
 #define T_DATA_TYPE_3 ""
@@ -49,63 +57,51 @@
 #define T_COMA_1 ""
 #define T_COMA_2 ""
 #define T_COMA_3 ""
-#define T_BITWISE_NOT_0 "~"
-#define T_BITWISE_NOT_1 ""
-#define T_BITWISE_NOT_2 ""
-#define T_BITWISE_NOT_3 ""
-#define T_NOT_0 "not"
+#define T_NOT_0 "Not"
 #define T_NOT_1 ""
 #define T_NOT_2 ""
 #define T_NOT_3 ""
-#define T_BITWISE_AND_0 "&"
-#define T_BITWISE_AND_1 ""
-#define T_BITWISE_AND_2 ""
-#define T_BITWISE_AND_3 ""
-#define T_AND_0 "and"
+#define T_AND_0 "And"
 #define T_AND_1 ""
 #define T_AND_2 ""
 #define T_AND_3 ""
-#define T_BITWISE_OR_0 "|"
-#define T_BITWISE_OR_1 ""
-#define T_BITWISE_OR_2 ""
-#define T_BITWISE_OR_3 ""
-#define T_OR_0 "or"
+#define T_OR_0 "||"
 #define T_OR_1 ""
 #define T_OR_2 ""
 #define T_OR_3 ""
-#define T_EQUAL_0 "=="
+#define T_EQUAL_0 "Eg"
 #define T_EQUAL_1 ""
 #define T_EQUAL_2 ""
 #define T_EQUAL_3 ""
-#define T_NOT_EQUAL_0 "!="
+#define T_NOT_EQUAL_0 "Ne"
 #define T_NOT_EQUAL_1 ""
 #define T_NOT_EQUAL_2 ""
 #define T_NOT_EQUAL_3 ""
-#define T_LESS_0 "lt"
+#define T_LESS_0 "Le"
 #define T_LESS_1 ""
 #define T_LESS_2 ""
 #define T_LESS_3 ""
-#define T_GREATER_0 "gt"
+#define T_GREATER_0 "Ge"
 #define T_GREATER_1 ""
 #define T_GREATER_2 ""
 #define T_GREATER_3 ""
-#define T_ADD_0 "add"
+#define T_ADD_0 "++"
 #define T_ADD_1 ""
 #define T_ADD_2 ""
 #define T_ADD_3 ""
-#define T_SUB_0 "-"
+#define T_SUB_0 "Sub"
 #define T_SUB_1 ""
 #define T_SUB_2 ""
 #define T_SUB_3 ""
-#define T_MUL_0 "mul"
+#define T_MUL_0 "**"
 #define T_MUL_1 ""
 #define T_MUL_2 ""
 #define T_MUL_3 ""
-#define T_DIV_0 "/"
+#define T_DIV_0 "Div"
 #define T_DIV_1 ""
 #define T_DIV_2 ""
 #define T_DIV_3 ""
-#define T_MOD_0 "%"
+#define T_MOD_0 "Mod"
 #define T_MOD_1 ""
 #define T_MOD_2 ""
 #define T_MOD_3 ""
@@ -117,67 +113,53 @@
 #define T_THEN_BLOCK_1 ""
 #define T_THEN_BLOCK_2 ""
 #define T_THEN_BLOCK_3 ""
-#define T_ELSE_BLOCK_0 "else"
+#define T_ELSE_BLOCK_0 "Else"
 #define T_ELSE_BLOCK_1 T_BEGIN_BLOCK_0
 #define T_ELSE_BLOCK_2 ""
 #define T_ELSE_BLOCK_3 ""
-#define T_IF_0 "if"
+#define T_IF_0 "If"
 #define T_IF_1 ""
 #define T_IF_2 ""
 #define T_IF_3 ""
-#define T_ELSE_IF_0 "else"
+#define T_ELSE_IF_0 "Else"
 #define T_ELSE_IF_1 T_IF_0
 #define T_ELSE_IF_2 ""
 #define T_ELSE_IF_3 ""
-#define T_WHILE_0 "while"
-#define T_WHILE_1 ""
-#define T_WHILE_2 ""
-#define T_WHILE_3 ""
-#define T_CONTINUE_WHILE_0 "continue"
-#define T_CONTINUE_WHILE_1 ""
-#define T_CONTINUE_WHILE_2 ""
-#define T_CONTINUE_WHILE_3 ""
-#define T_EXIT_WHILE_0 "break"
-#define T_EXIT_WHILE_1 "" 
-#define T_EXIT_WHILE_2 "" 
-#define T_EXIT_WHILE_3 ""
-#define T_EXIT_0 "exit"
-#define T_EXIT_1 "" 
-#define T_EXIT_2 "" 
-#define T_EXIT_3 ""
-#define T_INPUT_0 "read"
+#define T_INPUT_0 "Scan"
 #define T_INPUT_1 ""
 #define T_INPUT_2 ""
 #define T_INPUT_3 ""
-#define T_OUTPUT_0 "write"
+#define T_OUTPUT_0 "Print"
 #define T_OUTPUT_1 ""
 #define T_OUTPUT_2 ""
 #define T_OUTPUT_3 ""
-#define T_NAME_0 "program"
+#define T_NAME_0 "Program"
 #define T_NAME_1 ""
 #define T_NAME_2 ""
 #define T_NAME_3 ""
-#define T_BODY_0 "start"
+#define T_BODY_0 "Start"
 #define T_BODY_1 ""
 #define T_BODY_2 ""
 #define T_BODY_3 ""
-#define T_DATA_0 "var"
+#define T_DATA_0 "Var"
 #define T_DATA_1 ""
 #define T_DATA_2 ""
 #define T_DATA_3 ""
-#define T_BEGIN_0 "begin"
-#define T_BEGIN_1 ""
-#define T_BEGIN_2 ""
-#define T_BEGIN_3 ""
-#define T_END_0 "end"
+#define T_END_0 "End"
 #define T_END_1 ""
 #define T_END_2 ""
 #define T_END_3 ""
-#define T_NULL_STATEMENT_0 "null"
-#define T_NULL_STATEMENT_1 "statement"
+#define T_NULL_STATEMENT_0 "NULL"
+#define T_NULL_STATEMENT_1 "STATEMENT"
 #define T_NULL_STATEMENT_2 ""
 #define T_NULL_STATEMENT_3 ""
 #define GRAMMAR_LL2__2025 {\
+{ LA_IS, {"ident_terminal"}, { "labeled_point",{\
+    { LA_IS, {""}, 2, {"ident", T_COLON_0}}\
+}}},\
+{ LA_IS, {T_GOTO_0}, { "goto_label",{\
+    { LA_IS, {""}, 2, {T_GOTO_0, "ident"}}\
+}}},\
 { LA_IS, {"ident_terminal"}, { "program_name",{\
     { LA_IS, {""}, 1, {"ident"}}\
 }}},\
@@ -306,7 +288,7 @@
     {LA_IS, {""}, 1, { "expression" }}\
 }}},\
 {LA_IS, { T_BEGIN_BLOCK_0 }, { "body_for_true",{\
-    {LA_IS, {""}, 1, { "block_statements_in_while_and_if_body" }}\
+    {LA_IS, {""}, 1, { "block_statements" }}\
 }}},\
 {LA_IS, { T_ELSE_IF_0 }, { "false_cond_block_without_else",{\
     {LA_IS, {""}, 4, { T_ELSE_IF_0, T_ELSE_IF_1, "if_expression", "body_for_true" }}\
@@ -330,42 +312,6 @@
 {LA_NOT, { T_ELSE_BLOCK_0 }, { "body_for_false__optional",{\
     {LA_IS, {""}, 0, { "" }}\
 }}},\
-{LA_IS, { T_CONTINUE_WHILE_0 }, { "continue_while",{\
-    {LA_IS, {""}, 1, { T_CONTINUE_WHILE_0 }}\
-}}},\
-{LA_IS, { T_EXIT_WHILE_0 }, { "break_while",{\
-    {LA_IS, {""}, 1, { T_EXIT_WHILE_0 }}\
-}}},\
-{LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement_in_while_and_if_body",{\
-    {LA_IS, {""}, 1, { "statement" }}\
-}}},\
-{LA_IS, { T_CONTINUE_WHILE_0 }, { "statement_in_while_and_if_body",{\
-    {LA_IS, {""}, 1, { "continue_while" }}\
-}}},\
-{LA_IS, { T_EXIT_WHILE_0 }, { "statement_in_while_and_if_body",{\
-    {LA_IS, {""}, 1, { "break_while" }}\
-}}},\
-{LA_IS, { T_BEGIN_BLOCK_0 }, { "block_statements_in_while_and_if_body",{\
-    {LA_IS, {""}, 3, { T_BEGIN_BLOCK_0, "statement_in_while_and_if_body__iteration", T_END_BLOCK_0 }}\
-}}},\
-{LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0, T_CONTINUE_WHILE_0, T_EXIT_WHILE_0 }, { "statement_in_while_and_if_body__iteration",{\
-    {LA_IS, {""}, 2, { "statement_in_while_and_if_body", "statement_in_while_and_if_body__iteration" }}\
-}}},\
-{LA_NOT, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0, T_CONTINUE_WHILE_0, T_EXIT_WHILE_0 }, { "statement_in_while_and_if_body__iteration",{\
-    {LA_IS, {""}, 0, { "" }}\
-}}},\
-{LA_IS, { "(", T_NOT_0, T_ADD_0, T_SUB_0, "ident_terminal", "unsigned_value_terminal", T_IF_0 }, { "while_cycle_head_expression",{\
-    {LA_IS, {""}, 1, { "expression" }}\
-}}},\
-{LA_IS, { T_WHILE_0 }, { "while_cycle",{\
-    {LA_IS, {""}, 3, { T_WHILE_0, "while_cycle_head_expression", "block_statements_in_while_and_if_body" }}\
-}}},\
-{LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statements__or__block_statements",{\
-    {LA_IS, {""}, 1, { "statement__iteration" }}\
-}}},\
-{LA_IS, { T_BEGIN_BLOCK_0 }, { "statements__or__block_statements",{\
-    {LA_IS, {""}, 1, { "block_statements" }}\
-}}},\
 {LA_IS, { T_INPUT_0 }, { "input_rule",{\
     {LA_IS, {""}, 2, { T_INPUT_0, "argument_for_input" }}\
 }}},\
@@ -378,11 +324,15 @@
 {LA_IS, { T_OUTPUT_0 }, { "output_rule", {\
     {LA_IS, { "" }, 2, {T_OUTPUT_0, "expression"} }\
 }}},\
-{LA_IS, { "(", T_NOT_0, "ident_terminal", "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0 }, { "statement", {\
+{LA_IS, { "ident_terminal" }, { "statement", {\
+    { LA_IS, { T_COLON_0 }, 1, {"labeled_point"}},\
+    { LA_NOT, { T_COLON_0 }, 1, {"expression_or_cond_block__with_optional_assign"}}\
+}}},\
+{LA_IS, { "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0 }, { "statement", {\
     { LA_IS, {""}, 1, {"expression_or_cond_block__with_optional_assign"}}\
 }}},\
-{LA_IS, { T_WHILE_0 }, { "statement",{\
-    {LA_IS, {""}, 1, {"while_cycle"}}\
+{LA_IS, { T_GOTO_0 }, { "statement",{\
+    {LA_IS, {""}, 1, {"goto_label"}}\
 }}},\
 {LA_IS, { T_INPUT_0 }, { "statement",{\
     {LA_IS, {""}, 1, {"input_rule"}}\
@@ -393,10 +343,10 @@
 {LA_IS, { T_SEMICOLON_0 }, { "statement",{\
     {LA_IS, {""}, 1, {";"}}\
 }}},\
-{ LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement__iteration",{\
+{ LA_IS, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_GOTO_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement__iteration",{\
     { LA_IS, {""}, 2, { "statement", "statement__iteration" }}\
 }}},\
-{ LA_NOT, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_WHILE_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement__iteration",{\
+{ LA_NOT, { "ident_terminal", "(", T_NOT_0, "unsigned_value_terminal", T_ADD_0, T_SUB_0, T_IF_0, T_GOTO_0, T_INPUT_0, T_OUTPUT_0, T_SEMICOLON_0 }, { "statement__iteration",{\
     { LA_IS, {""}, 0, { "" }}\
 }}},\
 { LA_IS, { T_BEGIN_BLOCK_0 }, { "block_statements",{\
@@ -409,7 +359,7 @@
     {LA_IS, {""}, 0, { "" }}\
 }}},\
 { LA_IS, { T_NAME_0 }, { "program_rule",{\
-    { LA_IS, {""}, 9, { T_NAME_0, "program_name", T_SEMICOLON_0, T_BODY_0, T_DATA_0, "declaration__optional", T_SEMICOLON_0, "statement__iteration", T_END_0 }}\
+    { LA_IS, {""}, 9, { T_NAME_0, "program_name", T_BODY_0, T_DATA_0, "declaration__optional", "statement__iteration", T_END_0 }}\
 }}},\
 { LA_IS, { T_DATA_TYPE_0 }, { "declaration__optional",{\
     { LA_IS, {""}, 1, { "declaration" }}\
