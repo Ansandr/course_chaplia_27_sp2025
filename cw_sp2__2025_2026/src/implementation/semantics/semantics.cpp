@@ -29,9 +29,33 @@ unsigned long long int getPostDataSectionLexemIndex(LexemInfo* lexemInfoTable, G
 		return lexemIndex;
 	}
 #else
-	for (; lexemInfoTable[lexemIndex].lexemStr[0] != '\0' && !strstr(lexemInfoTable[lexemIndex].lexemStr, T_DATA_0) != '\0'; ++lexemIndex);
-	for (; lexemInfoTable[lexemIndex].lexemStr[0] != '\0' && !strstr(lexemInfoTable[lexemIndex].lexemStr, T_SEMICOLON_0) != '\0'; ++lexemIndex);
-	if (lexemInfoTable->lexemStr[0] != '\0') {
+	// Find "Var" keyword (T_DATA_0)
+	for (; lexemInfoTable[lexemIndex].lexemStr[0] != '\0' && strstr(lexemInfoTable[lexemIndex].lexemStr, T_DATA_0) == NULL; ++lexemIndex);
+	// Skip past the declaration section - find the first statement keyword (Scan, Print, etc.) after Var
+	// or find first identifier that is NOT followed by comma or is not after comma
+	if (lexemInfoTable[lexemIndex].lexemStr[0] != '\0') {
+		++lexemIndex; // Skip "Var"
+		// Skip value_type (e.g., Int_4)
+		if (lexemInfoTable[lexemIndex].lexemStr[0] != '\0') {
+			++lexemIndex;
+		}
+		// Now skip all declared identifiers and commas
+		while (lexemInfoTable[lexemIndex].lexemStr[0] != '\0') {
+			if (lexemInfoTable[lexemIndex].tokenType == IDENTIFIER_LEXEME_TYPE) {
+				++lexemIndex;
+				// Check if next token is a comma
+				if (lexemInfoTable[lexemIndex].lexemStr[0] != '\0' && 
+					strncmp(lexemInfoTable[lexemIndex].lexemStr, ",", MAX_LEXEM_SIZE) == 0) {
+					++lexemIndex; // Skip comma and continue to next identifier
+				} else {
+					// No comma after identifier - this is the last declared variable
+					break;
+				}
+			} else {
+				// Not an identifier - we've reached the end of declarations
+				break;
+			}
+		}
 		return lexemIndex;
 	}
 #endif
